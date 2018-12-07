@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件通信</title>
+</head>
+<body>
+    <div id="app">
+        <my-div msg="哈哈哈哈" imgsrc="img/1.jpg"></my-div>
+        <my-div msg="噼噼啪啪" imgsrc="img/2.jpg"></my-div>
+    </div>
+
+    <!--注册一个组件-->
+    <template id="my_div">
+        <div>
+            <h1>{{ msg }}</h1>
+            <img :src="imgsrc" alt="" width="200">
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 1. 创建组件
+        Vue.component('my-div', {
+            template: '#my_div',
+            props: [
+                'msg', 'imgsrc'
+            ]
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                msg: 'weather is good'
+            }
+        });
+    </script>
+
+</body>
+</html>

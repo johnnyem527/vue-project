@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <link rel="stylesheet" href="bs/css/bootstrap.css">
+</head>
+<body>
+
+    <div id="app">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 col-md-offest-2">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">姓名</div>
+                        </div>
+                        <input type="text" class="form-control" v-model="person.name">
+
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">性别</div>
+                        </div>
+                        <input type="text" class="form-control" v-model="person.gender">
+                    </div>
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">年龄</div>
+                        </div>
+                        <input type="text" class="form-control" v-model="person.age">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">出生日期</div>
+                        </div>
+                        <input type="date" class="form-control" v-model="person.birth">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 col-md-offest-2">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>年龄</th>
+                                <th>出生日期</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(person, idx) in persons">
+                                <td>{{ person.name }}</td>
+                                <td>{{ person.gender }}</td>
+                                <td>{{ person.age }}</td>
+                                <td>{{ person.birth }}</td>
+                                <td><button @click="deletePerson(idx)">删除</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button @click="addPerson()">添加</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                person: {
+                    name: '',
+                    gender: '',
+                    age: 0,
+                    birth: null
+                },
+                persons: [{
+                    name: '漳洒',
+                    gender: '男',
+                    age: 10,
+                    birth: '1998-08-08'
+                },{
+                    name: '丽丝',
+                    gender: '女',
+                    age: 21,
+                    birth: '1978-01-12'
+                }]
+            },
+
+            methods: {
+                addPerson() {
+                    this.persons.unshift(this.person);
+                    this.person = {
+                        name: '',
+                        gender: '',
+                        age: 0,
+                        birth: null
+                    };
+                },
+
+                deletePerson(idx) {
+                    this.persons.splice(idx, 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

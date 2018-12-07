@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多层组件通信必须通过动态绑定</title>
+</head>
+<body>
+    <div id="app">
+        <my-parent :imgtitle="title" :imgsrc="img"></my-parent>
+    </div>
+
+    <!--注册一个组件-->
+    <template id="my_img">
+        <img :src="imgsrc" alt="" width="200">
+    </template>
+
+    <template id="my_title">
+        <h2>{{ title }}</h2>
+    </template>
+
+    <template id="my_parent">
+        <div>
+            <child1 :imgsrc="imgsrc"></child1>
+            <child2 :title="imgtitle"></child2>
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 1. 子组件实例
+        let Child1 = Vue.extend({
+            template: '#my_img',
+            props: ['imgsrc']
+        });
+
+        let Child2 = Vue.extend({
+            template: '#my_title',
+            props: ['title']
+        });
+
+        // 2. 注册父组件
+        Vue.component('my-parent', {
+            props: ['imgtitle', 'imgsrc'],
+            components: {
+                'child1': Child1,
+                'child2': Child2
+            },
+            template: '#my_parent'
+        });
+
+        Vue.component('my-div', {
+            template: '#my_div',
+            props: [
+                'msg', 'imgsrc'
+            ]
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                title: 'nice or not',
+                img: 'img/1.jpg'
+            }
+        });
+    </script>
+
+</body>
+</html>

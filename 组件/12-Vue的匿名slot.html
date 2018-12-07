@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>匿名slot</title>
+</head>
+<body>
+
+    <div id="app">
+        <my-slot>
+            <img src="img/2.jpg" alt="" width="200">
+            <p>哈哈哈哈</p>
+            <input type="date">
+        </my-slot>
+    </div>
+
+    <template id="my_slot">
+        <div id="pandel">
+            <h2 class="panel-header">插槽的头部</h2>
+            <!--预留一个插槽-->
+            <slot>可以替换任何标签</slot>
+            <footer>插槽尾部</footer>
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        Vue.component('my-slot', {
+           template: '#my_slot'
+        });
+
+
+     new Vue({
+            el: '#app',
+            data: {
+                msg: 'weather is good'
+            }
+        });
+    </script>
+</body>
+</html>

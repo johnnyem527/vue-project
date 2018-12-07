@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind</title>
+    <style>
+        .active {
+            background-color: cornflowerblue;
+            font-size: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p v-for="(college, idx) in colleges" :class="idx === activeIdx?'active':''">
+        {{ college }}
+    </p>
+    <p :style="{color: fontColor}">Today's weather is good</p>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            colleges: [
+                'Java Academy',
+                'Python Academy',
+                'Vue Academy',
+                'Js Academy'
+            ],
+            activeIdx: 0,
+            fontColor: 'blue'
+        }
+    });
+</script>
+</body>
+</html>

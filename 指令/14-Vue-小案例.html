@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind</title>
+    <style>
+        #app {
+            margin: 50px auto;
+            width: 600px;
+        }
+
+        fieldset {
+            border: 2px solid orangered;
+            margin-bottom: 20px;
+        }
+
+        fieldset input {
+            width: 200px;
+            height: 30px;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 600px;
+            border: 2px solid orangered;
+            text-align: center;
+        }
+
+        thead {
+            background-color: orangered;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--part 1-->
+    <fieldset>
+        <legend>Student register system</legend>
+
+    <div>
+        <span>name:</span>
+        <input type="text" placeholder="input name" v-model="newStudent.name">
+    </div>
+    <div>
+        <span>age:</span>
+        <input type="text" placeholder="input age" v-model="newStudent.age">
+    </div>
+    <div>
+        <span>gender:</span>
+        <select v-model="newStudent.sex">
+            <option value="male">male</option>
+            <option value="female">female</option>
+        </select>
+    </div>
+    <div>
+        <span>phone:</span>
+        <input type="text" placeholder="input phone" v-model="newStudent.phone">
+    </div>
+        <button @click="createNewStudent()">create</button>
+    </fieldset>
+
+    <!--part 2-->
+    <table>
+        <thead>
+        <tr>
+            <td>name</td>
+            <td>gender</td>
+            <td>age</td>
+            <td>phone</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(p, idx) in persons">
+            <td>{{ p.name }}</td>
+            <td>{{ p.sex }}</td>
+            <td>{{ p.age }}</td>
+            <td>{{ p.phone }}</td>
+            <td>
+                <button @click="deleteStudentMsg(idx)">delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            persons: [
+                {name: 'zs', age: 20, sex: 'male', phone: '18080784521'},
+                {name: 'ws', age: 10, sex: 'female', phone: '181230784521'},
+                {name: 'sa', age: 12, sex: 'male', phone: '18012384521'},
+                {name: 'hgbg', age: 14, sex: 'female', phone: '1456380784521'}
+            ],
+            newStudent : {name: '', age: 0, sex: '', phone: ''}
+        },
+        methods: {
+            // create
+            createNewStudent(){
+                if(this.newStudent.name === '') {
+                    alert('empty name not allowed!');
+                    return;
+                }
+
+                if(this.newStudent.age <= 0) {
+                    alert('age is greater than 0!');
+                    return;
+                }
+
+                if(this.newStudent.phone === '') {
+                    alert('empty phone not allowed!');
+                    return;
+                }
+
+                this.persons.unshift(this.newStudent);
+                this.newStudent = {name: '', age: 0, sex: '', phone: ''}
+            },
+
+            // delete
+            deleteStudentMsg(idx){
+                this.persons.splice(idx, 1);
+            }
+        }
+
+    });
+</script>
+</body>
+</html>

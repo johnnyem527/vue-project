@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实名slot</title>
+</head>
+<body>
+
+    <div id="app">
+        <my-computer>
+            <div slot="cpu">Inter I8</div>
+            <div slot="gpu">AMD Reaon</div>
+            <div slot="mem">Inter I8</div>
+            <div slot="hard-driver">1TB</div>
+        </my-computer>
+    </div>
+
+    <template id="my_computer">
+        <div id="main">
+            <slot name="cpu">cpu</slot>
+            <slot name="gpu">gpu</slot>
+            <slot name="memory">内存条</slot>
+            <slot name="hard-drive">硬盘</slot>
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        Vue.component('my-computer', {
+           template: '#my_computer'
+        });
+
+
+     new Vue({
+            el: '#app',
+            data: {
+                msg: 'weather is good'
+            }
+        });
+    </script>
+</body>
+</html>

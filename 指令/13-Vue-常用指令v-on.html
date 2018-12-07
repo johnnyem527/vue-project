@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind</title>
+    <style>
+        .active {
+            background-color: cornflowerblue;
+            font-size: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p :style="{color: fontColor}">{{ msg }}</p>
+    <button v-on:click="msg = 'Today is hot!'">change</button>
+    <button @click="changeContent()">alert</button>
+    <button @click="changeColor()">change color</button>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            msg: 'Weather is excellent!',
+            fontColor: 'blue'
+        },
+        methods: { //实例的所有函数实现
+            changeContent() {
+                // alert(0);
+                this.msg = 'Hahahahha'
+            },
+            changeColor() {
+                // alert(0);
+                this.fontColor = 'orangered'
+            }
+        }
+    });
+</script>
+</body>
+</html>

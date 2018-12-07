@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多级路由</title>
+    <link rel="stylesheet" href="bs/css/bootstrap.css">
+    <style>
+        body {
+            background-color: #e8e8e8;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <div class="page-header">
+                        <h1>IT Education</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-2 col-xs-offset-2">
+                    <div class="list-group">
+                        <router-link class="list-group-item" :to="{name: 'h5'}">HTML</router-link>
+                        <router-link class="list-group-item" :to="{name: 'java'}">Java</router-link>
+                        <router-link class="list-group-item" :to="{name: 'python'}">Python</router-link>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <router-view></router-view>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id="h5">
+        <div>
+            <h2>HTML5</h2>
+            <p>html page~~~~~</p>
+            <img src="img/1.jpg" alt="" width="250">
+            <div>
+                <ul class="nav nav-tabs">
+                    <router-link to="/h5/basic">Basic class</router-link>
+                    <router-link to="/h5/big">Advanced class</router-link>
+                </ul>
+                <div class="tab-content">
+                    <router-view></router-view>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="basic">
+        <div>
+            <h3>Basic class</h3>
+            <p>Basic page~~~~~</p>
+            <img src="img/2.jpg" alt="" width="200">
+        </div>
+    </template>
+
+    <template id="big">
+        <div>
+            <h3>Advanced class</h3>
+            <p>Advanced page~~~~~</p>
+            <img src="img/2.jpg" alt="" width="200">
+        </div>
+    </template>
+
+    <template id="java">
+        <div>
+            <h2>JAVA</h2>
+            <p>JAVA page~~~~~</p>
+            <img src="img/1.jpg" alt="" width="250">
+        </div>
+    </template>
+
+    <template id="python">
+        <div>
+            <h2>PYTHON</h2>
+            <p>Python page~~~~~</p>
+            <img src="img/1.jpg" alt="" width="250">
+        </div>
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script>
+        // 1. 创建组件
+        const Html5 = Vue.extend({
+            template: '#h5'
+        });
+
+        const Basic = Vue.extend({
+            template: '#basic'
+        });
+
+        const Big = Vue.extend({
+            template: '#big'
+        });
+
+        const Java = Vue.extend({
+            template: '#java'
+        });
+
+        const Python = Vue.extend({
+            template: '#python'
+        });
+
+        // 2. 定义路由
+        const routes = [
+            {
+                path: '/h5',
+                name: 'h5',
+                component: Html5,
+                children:[
+                    {path: 'basic', component: Basic},
+                    {path: 'big', component: Big},
+                    // 配置根路由
+                    {path: '/', redirect: 'basic'}
+                ]
+            },
+            {path: '/java', name: 'java', component: Java},
+            {path: '/python', name: 'python', component: Python},
+            // 配置根路由
+            {path: '/', redirect: '/h5'}
+        ];
+
+        // 3. 创建路由实例
+        const router = new VueRouter({
+           routes
+        });
+
+        // 4. 创建Vue实例并挂载
+        new Vue({
+            router
+        }).$mount('#app');
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
