@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全局组件</title>
+</head>
+<body>
+
+    <div id="app">
+        <my-input></my-input>
+    </div>
+
+    <template id="my_input">
+        <input type="date">
+    </template>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        let inputDate = Vue.extend({
+           template: '#my_input'
+        });
+
+        Vue.component('my-input', inputDate);
+
+        new Vue({
+            el: '#app',
+            data: {
+                msg: 'weather is good'
+            }
+        });
+    </script>
+
+</body>
+</html>
