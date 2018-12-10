@@ -47,7 +47,7 @@
     </div>
     <div>
         <span>gender:</span>
-        <select v-model="newStudent.sex">
+        <select v-model="newStudent.gender">
             <option value="male">male</option>
             <option value="female">female</option>
         </select>
@@ -71,9 +71,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(p, idx) in persons">
+        <tr v-for="(p, idx) in students">
             <td>{{ p.name }}</td>
-            <td>{{ p.sex }}</td>
+            <td>{{ p.gender }}</td>
             <td>{{ p.age }}</td>
             <td>{{ p.phone }}</td>
             <td>
@@ -85,19 +85,33 @@
 </div>
 
 <script src="js/vue.js"></script>
+<script src="js/vue-resource.js"></script>
 <script>
     new Vue({
         el: '#app',
+        mounted() {
+            this.getStudentList();
+        },
         data: {
-            persons: [
-                {name: 'zs', age: 20, sex: 'male', phone: '18080784521'},
-                {name: 'ws', age: 10, sex: 'female', phone: '181230784521'},
-                {name: 'sa', age: 12, sex: 'male', phone: '18012384521'},
-                {name: 'hgbg', age: 14, sex: 'female', phone: '1456380784521'}
-            ],
-            newStudent : {name: '', age: 0, sex: '', phone: ''}
+            students: [],
+            newStudent : {name: '', age: 0, gender: '', phone: ''}
         },
         methods: {
+            // 获取学生列表
+            getStudentList(){
+                {
+                    // GET /someUrl
+                    this.$http.get('http://127.0.0.1:5000/queryStudents').then(response => {
+
+                        // get body data
+                        this.students = response.body;
+                    }, response => {
+                        // error callback
+                        alert('网络异常');
+                    });
+                }
+            },
+
             // create
             createNewStudent(){
                 if(this.newStudent.name === '') {
@@ -115,13 +129,28 @@
                     return;
                 }
 
-                this.persons.unshift(this.newStudent);
-                this.newStudent = {name: '', age: 0, sex: '', phone: ''}
+                // this.students.unshift(this.newStudent);
+                // GET /someUrl
+                this.$http.post('http://127.0.0.1:5000/addStudent',
+                    this.newStudent,
+                    {emulateJSON: true}).then(response => {
+
+                    if(response.body === 200){
+                        this.getStudentList();
+                    }
+                }, response => {
+                    // error callback
+                    alert('插入数据失败');
+                });
+
+
+                // 清空数据
+                this.newStudent = {name: '', age: 0, gender: '', phone: ''}
             },
 
             // delete
             deleteStudentMsg(idx){
-                this.persons.splice(idx, 1);
+                this.students.splice(idx, 1);
             }
         }
 
